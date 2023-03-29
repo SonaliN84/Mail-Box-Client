@@ -1,24 +1,26 @@
 import {Form,Button} from 'react-bootstrap';
 import './AuthForm.css';
-import { useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useRef} from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
 
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../Store/auth-slice';
 
-const SignUpForm=()=>{
+const LoginForm=()=>{
+    const dispatch=useDispatch();
     const history=useHistory();
     const emailInputRef=useRef();
     const passwordInputRef=useRef();
-    const confirmPasswordRef=useRef();
+    //  const authCtx=useContext(AuthContext)
 
     const submitHandler=(event)=>{
       event.preventDefault();
 
       const enteredEmail=emailInputRef.current.value;
       const enteredPassword=passwordInputRef.current.value;
-      const enteredConfirmPassword=confirmPasswordRef.current.value;
-      if(enteredPassword===enteredConfirmPassword)
-      {
-        let url="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAVbpTtBs1KE9wlXJoOhNny0ZNdGYBwIEY";
+     
+      
+        let url='https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAVbpTtBs1KE9wlXJoOhNny0ZNdGYBwIEY';
         fetch(url,{
             method:'POST',
             body:JSON.stringify({
@@ -33,50 +35,56 @@ const SignUpForm=()=>{
         .then((response)=>{
             if(response.ok)
             {
-                return response.json().then((res)=>{
-                    
-                    console.log("User has been succesfully signed up");
-                    history.replace('/Login')
-                })
+                return response.json()
                 
             }
             else{
                 return response.json().then((data)=>{
-                    console.log(data.error)
-
                 let errorMessage=data.error.message;
+
                 throw new Error(errorMessage)
                 })
             }
+        })
+        .then((data)=>{
+          console.log("data login",data)
+          console.log("login",data.idToken)
+            // authCtx.login(data.idToken);
+            const email=data.email;
+            const newEmail=email.replace(/[^a-zA-z0-9 ]/g,'');
+
+            // dispatch(authActions.login(data.idToken));
+
+            dispatch(authActions.login({
+              token:data.idToken,
+              email:newEmail
+            }));
+            history.replace('/Users')
+            console.log("user has been logged in")
+            
         })
         .catch((err)=>{
             alert(err.message)
         })
       }
-      else{
-        alert('Confirm password must be same as Password')
-      }
-    }
+     
+    
 
- return (
+
+  return(
     <Form className='Auth-form border d-grid' onSubmit={submitHandler}>
-    <h3 style={{textAlign:"center"}}>Sign Up</h3>
+    <h3 style={{textAlign:"center"}}>Login</h3>
      <Form.Group className="mb-2" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
         <Form.Control type="email" placeholder="Enter email" required ref={emailInputRef}/>
     
       </Form.Group>
 
-      <Form.Group className="mb-2" controlId="formBasicPassword">
+      <Form.Group className="mb-4" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
         <Form.Control type="password" placeholder="Password" required ref={passwordInputRef}/>
       </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Confirm Password</Form.Label>
-        <Form.Control type="password" placeholder="Confirm Password" required ref={confirmPasswordRef}/>
-      </Form.Group>
-      
+      {/* <NavLink to='/Forgot_Password' className="mb-3" style={{textAlign:"center",textDecoration:"none",color:"#C85C8E"}}>Forgot password</NavLink> */}
       <Button style={{background:"#C85C8E",border:"1px solid #C85C8E"}} type="submit" >
         Submit
       </Button>
@@ -84,8 +92,7 @@ const SignUpForm=()=>{
     
 
    
-  </Form>
- );
+  </Form> 
+  );
 }
-
-export default SignUpForm;
+export default LoginForm;
