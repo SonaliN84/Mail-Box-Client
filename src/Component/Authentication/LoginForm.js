@@ -57,7 +57,8 @@ const LoginForm=()=>{
 
             dispatch(authActions.login({
               token:data.idToken,
-              email:newEmail
+              email:newEmail,
+              "emailOriginal":email
             }));
             history.replace('/Users')
             console.log("user has been logged in")
