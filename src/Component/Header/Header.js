@@ -12,6 +12,8 @@ const Header = () => {
     dispatch(authActions.logout());
     dispatch(emailDataActions.setReceivedEmails([]))
     dispatch(emailDataActions.setSentEmails([]))
+    dispatch(emailDataActions.clearInterval())
+
   };
 
   const unreadCount=receivedEmailData.filter((email)=>email.read===false)

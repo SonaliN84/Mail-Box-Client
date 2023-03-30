@@ -64,21 +64,24 @@ const LoginForm=()=>{
             history.replace('/Users')
 
             console.log("user has been logged in")
-            axios.get(`https://mail-box-client-18272-default-rtdb.firebaseio.com/received${newEmail}.json`)
-            .then((response)=>{
-              let array=[];
-              Object.keys(response.data).forEach((key)=>{
-                  let obj={
-                      id:key,
-                      read:response.data[key].read,
-                      from:response.data[key].from,
-                      subject:response.data[key].subject,
-                      emaildata:response.data[key].emaildata
-                  }
-                  array.push(obj)
-                })
-              dispatch(emailDataActions.setReceivedEmails(array))
-            })
+            const interval=setInterval(()=>{
+              axios.get(`https://mail-box-client-18272-default-rtdb.firebaseio.com/received${newEmail}.json`)
+              .then((response)=>{
+                let array=[];
+                Object.keys(response.data).forEach((key)=>{
+                    let obj={
+                        id:key,
+                        read:response.data[key].read,
+                        from:response.data[key].from,
+                        subject:response.data[key].subject,
+                        emaildata:response.data[key].emaildata
+                    }
+                    array.push(obj)
+                  })
+                dispatch(emailDataActions.setReceivedEmails(array))
+              })
+            },1000)
+            dispatch(emailDataActions.setInterval(interval))
             axios.get(`https://mail-box-client-18272-default-rtdb.firebaseio.com/sent${newEmail}.json`)
             .then((response)=>{
               let array=[];
