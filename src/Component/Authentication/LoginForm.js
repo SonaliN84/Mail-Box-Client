@@ -79,6 +79,20 @@ const LoginForm=()=>{
                 })
               dispatch(emailDataActions.setReceivedEmails(array))
             })
+            axios.get(`https://mail-box-client-18272-default-rtdb.firebaseio.com/sent${newEmail}.json`)
+            .then((response)=>{
+              let array=[];
+              Object.keys(response.data).forEach((key)=>{
+                  let obj={
+                      id:key,
+                      to:response.data[key].to,
+                      subject:response.data[key].subject,
+                      emaildata:response.data[key].emaildata
+                  }
+                  array.push(obj)
+                })
+              dispatch(emailDataActions.setSentEmails(array))
+            })
 
 })
         .catch((err)=>{

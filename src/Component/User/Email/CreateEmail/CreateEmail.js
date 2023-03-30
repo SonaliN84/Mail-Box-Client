@@ -5,13 +5,17 @@ import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { emailDataActions } from '../../../../Store/emaildata-slice';
+
 const CreateEmail=()=>{
+    const dispatch=useDispatch();
     const editor=useRef(null)
     const inputToRef=useRef('')
     const inputSubjectRef=useRef('')
     const authUserEmailOriginal=useSelector(state=>state.auth.userEmailOriginal)
     const authUserEmail=useSelector(state=>state.auth.userEmail)
-
+    
     console.log(authUserEmail)
     const [content,setContent]=useState('')
     const changeDataHandler=()=>{
@@ -47,6 +51,20 @@ const CreateEmail=()=>{
   axios.post(`https://mail-box-client-18272-default-rtdb.firebaseio.com/sent${authUserEmail}.json`,newEmailDataSent)
   .then((res)=>{
    console.log(res)
+   axios.get(`https://mail-box-client-18272-default-rtdb.firebaseio.com/sent${authUserEmail}.json`)
+            .then((response)=>{
+              let array=[];
+              Object.keys(response.data).forEach((key)=>{
+                  let obj={
+                      id:key,
+                      to:response.data[key].to,
+                      subject:response.data[key].subject,
+                      emaildata:response.data[key].emaildata
+                  }
+                  array.push(obj)
+                })
+              dispatch(emailDataActions.setSentEmails(array))
+            })
   })
   axios.post(`https://mail-box-client-18272-default-rtdb.firebaseio.com/received${receiverEmail}.json`,newEmailDataReceived)
   .then((res)=>{

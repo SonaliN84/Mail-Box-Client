@@ -9,6 +9,8 @@ import ShowFullEmail from './Pages/ShowFullEmail';
 import { useEffect } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import {emailDataActions} from './Store/emaildata-slice';
+import SentEmails from './Pages/SentEmails';
+import ShowFullSentEmail from './Pages/ShowFullSentEmail';
 import axios from 'axios';
 function App() {
  const authIsLoggedIn=useSelector(state=>state.auth.isLoggedIn);
@@ -31,7 +33,21 @@ function App() {
           array.push(obj)
         })
       dispatch(emailDataActions.setReceivedEmails(array))
-    })  
+    }) 
+    axios.get(`https://mail-box-client-18272-default-rtdb.firebaseio.com/sent${email}.json`)
+    .then((response)=>{
+      let array=[];
+      Object.keys(response.data).forEach((key)=>{
+          let obj={
+              id:key,
+              to:response.data[key].to,
+              subject:response.data[key].subject,
+              emaildata:response.data[key].emaildata
+          }
+          array.push(obj)
+        })
+      dispatch(emailDataActions.setSentEmails(array))
+    }) 
    }
   },[authIsLoggedIn])
 
@@ -53,6 +69,12 @@ function App() {
         </Route>
         <Route path='/ComposeEmail'>
          <ComposeEmail/>
+        </Route>
+        <Route path='/SentEmails' exact>
+         <SentEmails/>
+        </Route>
+        <Route path='/SentEmails/:emailId'>
+         <ShowFullSentEmail/>
         </Route>
       </Switch>
     </RootLayout>

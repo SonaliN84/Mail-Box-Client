@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import ShowUserFullEmail from '../Component/User/Email/ShowUserFullEmail'
+import ShowUserFullEmail from '../Component/User/Email/ReceivedEmails/ShowUserFullEmail'
 const ShowFullEmail=()=>{
     const emailData=useSelector(state=>state.emailData.receivedEmails)
     const params = useParams();

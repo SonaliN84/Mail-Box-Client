@@ -1,4 +1,4 @@
-import CreateEmail from "../Component/User/Email/CreateEmail";
+import CreateEmail from "../Component/User/Email/CreateEmail/CreateEmail";
 const ComposeEmail=()=>{
  return (
     <CreateEmail/>

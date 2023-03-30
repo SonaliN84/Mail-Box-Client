@@ -10,6 +10,9 @@ const emailDataSlice=createSlice({
         setReceivedEmails(state,action){
             state.receivedEmails=action.payload
         },
+        setSentEmails(state,action){
+            state.sentEmails=action.payload
+        }
         
     }
 })

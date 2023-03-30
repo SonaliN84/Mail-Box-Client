@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "./ShowEmail.css";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { emailDataActions } from "../../../Store/emaildata-slice";
+import { emailDataActions } from "../../../../Store/emaildata-slice";
 import axios from "axios";
 const ShowEmail = (props) => {
   console.log("id", props.id);

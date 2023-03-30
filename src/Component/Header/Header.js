@@ -11,6 +11,7 @@ const Header = () => {
   const logoutHandler = () => {
     dispatch(authActions.logout());
     dispatch(emailDataActions.setReceivedEmails([]))
+    dispatch(emailDataActions.setSentEmails([]))
   };
 
   const unreadCount=receivedEmailData.filter((email)=>email.read===false)
@@ -71,7 +72,7 @@ const Header = () => {
                 > <button
                   type="button"
                   class="position-relative"
-                  style={{ background: "#C85C8E", border: "1px solid #C85C8E",color:"white",borderRadius:"5px"}}
+                  style={{ background: "#C85C8E", border: "1px solid #C85C8E",color:"white",borderRadius:"5px",padding:"8px"}}
                 >
                   Inbox
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info  text-dark">
@@ -83,7 +84,16 @@ const Header = () => {
                   
                 </Link>
               </Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Sent</Dropdown.Item>
+              <Dropdown.Item>
+              <Button
+                  className="my-2"
+                  style={{
+                    background: "#C85C8E",
+                    border: "1px solid #C85C8E",
+                    textDecoration: "none",
+                  }}
+                >
+                <Link to='/SentEmails'  style={{ textDecoration: "none", color: "white" }}>Sent</Link></Button></Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Nav>
