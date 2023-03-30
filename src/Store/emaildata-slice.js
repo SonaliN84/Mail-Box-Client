@@ -9,7 +9,8 @@ const emailDataSlice=createSlice({
     reducers:{
         setReceivedEmails(state,action){
             state.receivedEmails=action.payload
-        }
+        },
+        
     }
 })
 export default emailDataSlice.reducer;
