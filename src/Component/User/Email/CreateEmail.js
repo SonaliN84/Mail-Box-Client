@@ -33,11 +33,13 @@ const CreateEmail=()=>{
    emaildata:enteredEmailData
   }
   let emailDataReceived={
+  
    from:authUserEmailOriginal,
    subject:enteredSubject,
-   emaildata:enteredEmailData
+   emaildata:enteredEmailData,
+   read:false
   }
-
+  
   let receiverEmail=enteredTo.replace(/[^a-zA-z0-9 ]/g,'');
   let newEmailDataSent=JSON.stringify(emailDataSent)
   let newEmailDataReceived=JSON.stringify(emailDataReceived)
@@ -48,7 +50,7 @@ const CreateEmail=()=>{
   })
   axios.post(`https://mail-box-client-18272-default-rtdb.firebaseio.com/received${receiverEmail}.json`,newEmailDataReceived)
   .then((res)=>{
-   console.log(res)
+   console.log("received email",res.data)
   })
 
    }

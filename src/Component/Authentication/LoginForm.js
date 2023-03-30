@@ -70,6 +70,7 @@ const LoginForm=()=>{
               Object.keys(response.data).forEach((key)=>{
                   let obj={
                       id:key,
+                      read:response.data[key].read,
                       from:response.data[key].from,
                       subject:response.data[key].subject,
                       emaildata:response.data[key].emaildata

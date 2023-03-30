@@ -5,10 +5,10 @@ const ReceivedEmails=()=>{
   const receivedEmailData=useSelector(state=>state.emailData.receivedEmails)
   return (
  <div className='receivedemail' >
-   {console.log("recived",receivedEmailData)}
+   {console.log("received",receivedEmailData)}
   
    {receivedEmailData.map((email)=>(
-    <ShowEmail from={email.from} subject={email.subject} emaildata={email.emaildata}/>
+    <ShowEmail id={email.id} from={email.from} subject={email.subject} emaildata={email.emaildata} read={email.read}/>
    ))}
   
   </div>

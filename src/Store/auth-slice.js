@@ -10,6 +10,7 @@ const initialAuthState={
   userEmail:initialEmail,
   userEmailOriginal:initialEmailOriginal
 }
+
 const authSlice=createSlice({
     name:'auth',
     initialState:initialAuthState,
@@ -38,7 +39,7 @@ const authSlice=createSlice({
        localStorage.removeItem('token')
        localStorage.removeItem('email')
        localStorage.removeItem('emailOriginal')
-
+    
       },
     
 
