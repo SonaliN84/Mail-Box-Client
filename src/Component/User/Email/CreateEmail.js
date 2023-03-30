@@ -4,6 +4,7 @@ import {useState,useRef} from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 const CreateEmail=()=>{
     const editor=useRef(null)
     const inputToRef=useRef('')
@@ -60,12 +61,14 @@ const CreateEmail=()=>{
            className='editor'
             ref={editor}
             value={content}
-            onChange={changeDataHandler}
-            // onChange={newContent=>setContent(newContent)}
+            // onChange={changeDataHandler}
+            onChange={newContent=>setContent(newContent)}
     
       />
+      {content}
        <div style={{display:"flex",justifyContent:"center"}}>  
-   <Button style={{backgroundColor:"#C85C8E",border:"1px solid #C85C8E"}}className='my-2' type="submit">Send</Button>
+   <Button style={{backgroundColor:"#C85C8E",border:"1px solid #C85C8E"}}className='my-2 mx-2' type="submit">Send</Button>
+   <Link to='/Users'><Button style={{backgroundColor:"#C85C8E",border:"1px solid #C85C8E"}}className='my-2'>Cancel</Button></Link>
  </div>
  </form>
  </div> )

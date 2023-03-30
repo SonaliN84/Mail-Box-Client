@@ -3,9 +3,10 @@ import './AuthForm.css';
 import { useRef} from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../Store/auth-slice';
-
+import axios from 'axios';
+import {emailDataActions} from '../../Store/emaildata-slice'
 const LoginForm=()=>{
     const dispatch=useDispatch();
     const history=useHistory();
@@ -61,9 +62,24 @@ const LoginForm=()=>{
               "emailOriginal":email
             }));
             history.replace('/Users')
+
             console.log("user has been logged in")
-            
-        })
+            axios.get(`https://mail-box-client-18272-default-rtdb.firebaseio.com/received${newEmail}.json`)
+            .then((response)=>{
+              let array=[];
+              Object.keys(response.data).forEach((key)=>{
+                  let obj={
+                      id:key,
+                      from:response.data[key].from,
+                      subject:response.data[key].subject,
+                      emaildata:response.data[key].emaildata
+                  }
+                  array.push(obj)
+                })
+              dispatch(emailDataActions.setReceivedEmails(array))
+            })
+
+})
         .catch((err)=>{
             alert(err.message)
         })

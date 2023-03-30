@@ -1,16 +1,15 @@
 import { Fragment } from "react";
-import CreateEmail from "./Email/CreateEmail";
-
+import './User.css'
+import ReceivedEmails from "./Email/ReceivedEmails";
+import {Button} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const User =()=>{
  
     return (
         <Fragment>
-        <div style={{margin:"20px auto",textAlign:"center"}}>
-        
-            <h3>Welcome to your mail box</h3>
-         </div>
-       <CreateEmail/>
+         <ReceivedEmails/>
+      
        </Fragment>
     )
 }

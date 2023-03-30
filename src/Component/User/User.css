@@ -1,0 +1,13 @@
+.userscreen{
+    margin:10px;
+    display: grid;
+    grid-template-columns:150px auto;  
+    /* border: 1px solid grey; */
+    padding:20px;
+  }
+.sidepanel{
+    /* padding:0 10px; */
+    display:grid;
+    margin:0 10px 0 5px;
+    
+}

@@ -4,6 +4,7 @@ import RootLayout from './Pages/RootLayout';
 import Signup from './Pages/Signup';
 import Login from './Pages/Login';
 import Users from './Pages/Users';
+import ComposeEmail from './Pages/ComposeEmail';
 function App() {
   return (
     <RootLayout>
@@ -16,6 +17,9 @@ function App() {
         </Route>
         <Route path='/Users'>
          <Users/>
+        </Route>
+        <Route path='/ComposeEmail'>
+         <ComposeEmail/>
         </Route>
       </Switch>
     </RootLayout>
