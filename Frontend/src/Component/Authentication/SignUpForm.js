@@ -2,7 +2,7 @@ import {Form,Button} from 'react-bootstrap';
 import './AuthForm.css';
 import { useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-
+import axios from 'axios';
 
 const SignUpForm=()=>{
     const history=useHistory();
@@ -18,40 +18,19 @@ const SignUpForm=()=>{
       const enteredConfirmPassword=confirmPasswordRef.current.value;
       if(enteredPassword===enteredConfirmPassword)
       {
-        let url="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAVbpTtBs1KE9wlXJoOhNny0ZNdGYBwIEY";
-        fetch(url,{
-            method:'POST',
-            body:JSON.stringify({
-                email:enteredEmail,
-                password:enteredPassword,
-                returnSecureToken:true
-              }),
-              headers:{
-                'Content-Type':'application/json'
-              }
-        })
-        .then((response)=>{
-            if(response.ok)
-            {
-                return response.json().then((res)=>{
-                    
-                    console.log("User has been succesfully signed up");
-                    history.replace('/Login')
-                })
-                
-            }
-            else{
-                return response.json().then((data)=>{
-                    console.log(data.error)
-
-                let errorMessage=data.error.message;
-                throw new Error(errorMessage)
-                })
-            }
-        })
-        .catch((err)=>{
-            alert(err.message)
-        })
+       const user={
+         email:enteredEmail,
+         password:enteredPassword
+       }
+       axios.post('http://localhost:3000/user/signup',user)
+       .then((response)=>{
+        console.log(response)
+        alert("you are succesfully signed up");
+        history.replace('/Login')
+       })
+       .catch(err=>{
+        alert(err.response.data.err)
+       })
       }
       else{
         alert('Confirm password must be same as Password')

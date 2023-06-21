@@ -68,7 +68,11 @@ const CreateEmail=()=>{
   })
   axios.post(`https://mail-box-client-18272-default-rtdb.firebaseio.com/received${receiverEmail}.json`,newEmailDataReceived)
   .then((res)=>{
+    alert("Email sent successfully")
    console.log("received email",res.data)
+   inputToRef.current.value='';
+   inputSubjectRef.current.value='';
+   editor.current.value='';
   })
 
    }
@@ -85,7 +89,7 @@ const CreateEmail=()=>{
             onChange={newContent=>setContent(newContent)}
     
       />
-      {content}
+      
        <div style={{display:"flex",justifyContent:"center"}}>  
    <Button style={{backgroundColor:"#C85C8E",border:"1px solid #C85C8E"}}className='my-2 mx-2' type="submit">Send</Button>
    <Link to='/Users'><Button style={{backgroundColor:"#C85C8E",border:"1px solid #C85C8E"}}className='my-2'>Cancel</Button></Link>
