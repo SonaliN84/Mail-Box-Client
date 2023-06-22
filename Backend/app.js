@@ -6,11 +6,13 @@ dotenv.config();
 const mongoose = require("mongoose");
 
 const userRoutes=require('./routes/user')
+const emailRoutes=require('./routes/email')
 const app = express();
 app.use(cors());
 app.use(bodyParser.json({ extended: false }));
 
 app.use(userRoutes)
+app.use(emailRoutes)
 
 mongoose
   .connect(process.env.MONGODB)

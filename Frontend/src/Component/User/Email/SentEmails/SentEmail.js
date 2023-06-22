@@ -10,7 +10,7 @@ const SentEmail=()=>{
      
     
      {sentEmailData.map((email)=>(
-      <ShowSentEmail id={email.id} to={email.to} subject={email.subject} emaildata={email.emaildata} />
+      <ShowSentEmail id={email._id} to={email.to} subject={email.subject} emaildata={email.emaildata} date={email.date} read={email.read}/>
      ))}
     
     </div>

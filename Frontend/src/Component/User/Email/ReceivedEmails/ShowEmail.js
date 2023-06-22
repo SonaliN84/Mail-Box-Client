@@ -84,14 +84,14 @@ const ShowEmail = (props) => {
             {props.read === false ? (
               <div
                 style={{
-                  width: "7px",
-                  height: "7px",
+                  width: "8px",
+                  height: "8px",
                   background: "blue",
                   border: "1px solid blue",
                   borderRadius: "100px",
                   float: "left",
                 }}
-                className="mx-2 my-2"
+                className="me-2 my-2"
               ></div>
             ) : (
               ""
@@ -99,16 +99,29 @@ const ShowEmail = (props) => {
 
             {props.from}
           </div>
-
-          <div class="col" style={{ overflow: "hidden", fontStyle: "italic" }}>
-            {props.subject}
-          </div>
-
           <div
             class="col"
+            style={{
+              overflow: "hidden",
+              fontStyle: "italic",
+              textAlign: "right",
+            }}
+          >
+            {props.date}
+          </div>
+          <div
+            class="row"
+            style={{ overflow: "hidden", wordBreak: "break-word" }}
+            className="mx-3 my-2"
+          >
+            Subject:{props.subject}
+          </div>
+
+          {/* <div
+            class="row"
             dangerouslySetInnerHTML={{ __html: data }}
             style={{ overflow: "hidden" }}
-          />
+          /> */}
         </div>
       </Link>
       <div>

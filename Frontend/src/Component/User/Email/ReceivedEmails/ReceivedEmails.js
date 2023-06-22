@@ -8,7 +8,7 @@ const ReceivedEmails=()=>{
    {console.log("received",receivedEmailData)}
   
    {receivedEmailData.map((email)=>(
-    <ShowEmail id={email.id} from={email.from} subject={email.subject} emaildata={email.emaildata} read={email.read}/>
+    <ShowEmail id={email._id} from={email.from} subject={email.subject} emaildata={email.emaildata} read={email.read} date={email.date}/>
    ))}
   
   </div>

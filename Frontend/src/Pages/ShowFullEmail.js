@@ -5,10 +5,10 @@ const ShowFullEmail=()=>{
     const emailData=useSelector(state=>state.emailData.receivedEmails)
     const params = useParams();
   console.log(params)
-  const email=emailData.find((email)=>email.id===params.emailId)
+  const email=emailData.find((email)=>email._id===params.emailId)
   console.log("main",email)
  return(
-   <ShowUserFullEmail from={email.from} subject={email.subject} emaildata={email.emaildata}/> 
+   <ShowUserFullEmail from={email.from} subject={email.subject} emaildata={email.emaildata} date={email.date}/> 
 
  )
 }
