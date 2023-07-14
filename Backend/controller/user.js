@@ -65,6 +65,7 @@ exports.postLoginUser = async (req, res, next) => {
             success: true,
             token: generateAccessToken(user._id),
             email: user.email,
+            userId:user._id
           });
       } else {
         res.status(401).json({ err: "Incorrect Password", success: false });

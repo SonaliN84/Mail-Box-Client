@@ -1,5 +1,6 @@
 const Email = require("../models/email");
 const User = require("../models/user");
+const io=require('../socket')
 exports.postSendEmail = async (req, res, next) => {
   try {
     const to = req.body.to;
@@ -28,6 +29,11 @@ exports.postSendEmail = async (req, res, next) => {
     });
     console.log(email);
     await email.save();
+    const id=(receiver._id).toString()
+    io.getIO().to(id).emit('new-received-email',{email:email})
+
+    const id1=(req.user._id).toString()
+    io.getIO().to(id1).emit('new-sent-email',{email:email})
     res.status(201).json({ message: "Email sent successfully" });
   } catch (err) {
     res.status(500).json({ err: "Something went wrong" });
@@ -51,3 +57,31 @@ exports.getSentEmails = async (req, res, next) => {
     res.status(500).json({ err: "Something went wrong" });
   }
 };
+
+exports.putReadEmail=async(req,res,next)=>{
+  try{
+  const emailId=req.params.emailId;
+  const email=await Email.findById(emailId)
+  email.read=true;
+  await email.save();
+  console.log("senderId",email.senderId)
+  const id=(email.senderId).toString()
+  console.log(id)
+  io.getIO().to(id).emit('read-email',{emailId:email._id})
+  res.status(200).json({success:true})
+  }catch(err){
+    res.status(500).json({err:"Something went wrong"})
+  }
+}
+
+exports.deleteEmail=async(req,res,next)=>{
+  try{
+  const emailId=req.params.emailId;
+  const email=await Email.findById(emailId)
+  email.receiverId=null;
+  await email.save()
+  res.status(200).json({message:"Email deleted",success:true})
+  }catch(err){
+    res.status(500).json({err:"Something went wrong"})
+  }
+}

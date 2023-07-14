@@ -4,11 +4,15 @@ import { Link } from "react-router-dom";
 import "./Header.css";
 import { authActions } from "../../Store/auth-slice";
 import {emailDataActions} from '../../Store/emaildata-slice';
+import { socket } from "../../App";
+
 const Header = () => {
   const dispatch = useDispatch();
   const authIsLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const receivedEmailData=useSelector(state=>state.emailData.receivedEmails)
+  const userId=useSelector(state=>state.auth.userId)
   const logoutHandler = () => {
+    socket.emit("leaveroom",userId)
     dispatch(authActions.logout());
     dispatch(emailDataActions.setReceivedEmails([]))
     dispatch(emailDataActions.setSentEmails([]))

@@ -11,6 +11,10 @@ router.get("/email/received-emails",authMiddleware.authenticate,emailController.
 
 router.get("/email/sent-emails",authMiddleware.authenticate,emailController.getSentEmails)
 
-router.put("/email/read-email",authMiddleware.authenticate,emailController.putReadEmail)
+router.delete("/email/delete-email/:emailId",authMiddleware.authenticate,emailController.deleteEmail)
+
+router.put("/email/read-email/:emailId",authMiddleware.authenticate,emailController.putReadEmail)
+
+
 
 module.exports = router;

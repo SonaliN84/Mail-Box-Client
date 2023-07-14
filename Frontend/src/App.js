@@ -12,14 +12,33 @@ import {emailDataActions} from './Store/emaildata-slice';
 import SentEmails from './Pages/SentEmails';
 import ShowFullSentEmail from './Pages/ShowFullSentEmail';
 import axios from 'axios';
+import openSocket from "socket.io-client";
 function App() {
  const authIsLoggedIn=useSelector(state=>state.auth.isLoggedIn);
  const authToken=useSelector(state=>state.auth.token)
+ const userId=useSelector(state=>state.auth.userId)
+ let sentEmails=useSelector(state=>state.emailData.sentEmails)
+ let receivedEmails=useSelector(state=>state.emailData.receivedEmails)
   const dispatch=useDispatch();
+  console.log(userId)
+  socket.on('read-email',(data)=>{
+    console.log(">>>>>>>>>emailId",data.emailId)
+    dispatch(emailDataActions.setSentReadEmail(data.emailId))
+  })
+  socket.on('new-received-email',(data)=>{
+    receivedEmails=[...receivedEmails,data.email]
+    dispatch(emailDataActions.setReceivedEmails(receivedEmails))
+  })
+  socket.on('new-sent-email',(data)=>{
+    console.log("sent new email data>>>",data)
+    sentEmails=[...sentEmails,data.email]
+    dispatch(emailDataActions.setSentEmails(sentEmails))
+  })
+
   useEffect(()=>{
    if(authIsLoggedIn)
    {
-
+    socket.emit("joinroom",userId);
     axios.get('http://localhost:3000/email/received-emails',{
       headers: { Authorization: authToken },
     })
@@ -107,5 +126,5 @@ function App() {
     </RootLayout>
   );
 }
-
+export const socket = openSocket("http://localhost:3000");
 export default App;

@@ -20,6 +20,15 @@ const emailDataSlice=createSlice({
           clearInterval(state.Interval)
           state.sentEmails=[];
           state.receivedEmails=[];
+        },
+        setReadEmails(state,action){
+          let a=state.receivedEmails.find((e)=> e._id == action.payload)
+          a.read=true;
+          console.log("hi")
+        },
+        setSentReadEmail(state,action){
+          let a=state.sentEmails.find((e)=> e._id == action.payload)
+          a.read=true;
         }
         
         

@@ -27,20 +27,21 @@ const ShowSentEmail=(props)=>{
         /> */}
         <div class="row showuser">
           <div class="col" style={{ overflow: "hidden", fontWeight: "bold"}}>
-            {props.read === false ? (
+            {props.read === true ? (
               <div
                 style={{
-                  width: "8px",
-                  height: "8px",
-                  background: "blue",
-                  border: "1px solid blue",
-                  borderRadius: "100px",
+                  width: "18px",
+                  height: "18px",
                   float: "left",
                 }}
                 className="me-2 my-2"
-              ></div>
+              >
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Eo_circle_green_checkmark.svg"/>
+              </div>
             ) : (
-              ""
+              <div style={{ width: "18px",
+                  height: "18px",
+                  float: "left"}}></div>
             )}
 
             {props.to}
@@ -48,7 +49,7 @@ const ShowSentEmail=(props)=>{
           <div class="col" style={{ overflow: "hidden", fontStyle: "italic",textAlign:"right"}}>
             {props.date}
           </div>
-          <div class="row" style={{ overflow: "hidden",wordBreak:"break-word" }} className="mx-3 my-2">
+          <div class="row" style={{ overflow: "hidden",wordBreak:"break-word" }} className="mx-4 my-2">
             Subject : {props.subject}
           </div>
       </div>

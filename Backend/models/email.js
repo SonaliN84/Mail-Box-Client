@@ -27,7 +27,6 @@ const emailSchema = new Schema({
   receiverId: {
     type: Schema.Types.ObjectId,
     ref: "User",
-    required: true,
   },
   read: {
     type: Boolean,

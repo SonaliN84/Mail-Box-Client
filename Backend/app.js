@@ -18,8 +18,24 @@ mongoose
   .connect(process.env.MONGODB)
   .then(() => {
     console.log("connected");
-    app.listen(3000);
+
+    const server=app.listen(3000);
+    const io=require('./socket').init(server);
+    io.on("connection",(socket)=>{
+      socket.on("joinroom",(room)=>{
+        socket.join(room)
+        console.log("room joined",room)
+      })
+      socket.on("leaveroom",(room)=>{
+        socket.leave(room)
+      })
+      console.log("Client connected")
+    })
   })
   .catch((err) => {
     console.log(err);
   });
+
+
+
+  

@@ -2,6 +2,7 @@ import { Form, Button } from "react-bootstrap";
 import "./AuthForm.css";
 import { useRef } from "react";
 import { NavLink, useHistory } from "react-router-dom";
+import {socket} from '../../App'
 
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../Store/auth-slice";
@@ -31,8 +32,11 @@ const LoginForm = () => {
           authActions.login({
             token: response.data.token,
             email: response.data.email,
+            userId:response.data.userId
           })
-        );
+           );
+        
+        socket.emit("joinroom",response.data.userId);
         history.replace("/Users");
       })
       .catch((err) => {
