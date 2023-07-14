@@ -20,6 +20,11 @@ const CreateEmail = () => {
   const changeDataHandler = () => {
     setContent(editor.current.value);
   };
+  // const editor = Jodit.make("#editor", {
+  //   "uploader": {
+  //     "insertImageAsBase64URI": true
+  //   }
+  // });
   const formSubmitHandler = (event) => {
     event.preventDefault();
     const enteredTo = inputToRef.current.value;

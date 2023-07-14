@@ -40,14 +40,14 @@ exports.postSendEmail = async (req, res, next) => {
   }
 };
 
-exports.getReceivedEmails = async (req, res, next) => {
-  try {
-    const receivedEmails = await Email.find({ receiverId: req.user._id });
-    res.status(200).json({ receivedEmails: receivedEmails, success: true });
-  } catch (err) {
-    res.status(500).json({ err: "Something went wrong" });
-  }
-};
+// exports.getReceivedEmails = async (req, res, next) => {
+//   try {
+//     const receivedEmails = await Email.find({ receiverId: req.user._id });
+//     res.status(200).json({ receivedEmails: receivedEmails, success: true });
+//   } catch (err) {
+//     res.status(500).json({ err: "Something went wrong" });
+//   }
+// };
 
 exports.getSentEmails = async (req, res, next) => {
   try {
@@ -85,3 +85,33 @@ exports.deleteEmail=async(req,res,next)=>{
     res.status(500).json({err:"Something went wrong"})
   }
 }
+
+exports.getReceivedEmails = async (req, res, next) => {
+  try {
+    const page = parseInt(req.query.page);
+    console.log(">>>>>", page);
+    let size = parseInt(req.query.size);
+    console.log(">>>>>", size);
+    const total = await Email.count({ receiverId: req.user._id });
+    console.log("TOtal>>>>>", total);
+    
+    let offset = total - page * size;
+    console.log("offset", offset);
+    let limit = size;
+    if (offset < 0) {
+      offset = 0;
+      limit = total - (page - 1) * size;
+    }
+    console.log("new offset", offset);
+    console.log(limit,"limit")
+    
+    const receivedEmails = await Email.find({ receiverId: req.user._id })
+      .limit(limit)
+      .skip(offset);
+  
+
+    return res.status(200).json({ receivedEmails, total, page, size });
+  } catch (err) {
+    return res.status(500).json({ error: err, success: false });
+  }
+};

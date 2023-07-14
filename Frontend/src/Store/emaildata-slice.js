@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialDataState={
   receivedEmails:[],
-  sentEmails:[]
+  sentEmails:[],
+  activePage:1,
+  total:0,
+  limit:10
 }
 const emailDataSlice=createSlice({
     name:'emailData',
@@ -29,6 +32,21 @@ const emailDataSlice=createSlice({
         setSentReadEmail(state,action){
           let a=state.sentEmails.find((e)=> e._id == action.payload)
           a.read=true;
+        },
+        setActivePage(state,action){
+          state.activePage=action.payload+1
+        },
+        setTotal(state,action){
+          state.total=action.payload
+        },
+        setInitialActivePage(state){
+          state.activePage=1;
+        },
+        setLimit(state,action){
+          state.limit=action.payload+1;
+        },
+        setInitialLimit(state,action){
+          state.limit=10;
         }
         
         
