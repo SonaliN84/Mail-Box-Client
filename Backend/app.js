@@ -5,37 +5,33 @@ const dotenv = require("dotenv");
 dotenv.config();
 const mongoose = require("mongoose");
 
-const userRoutes=require('./routes/user')
-const emailRoutes=require('./routes/email')
+const userRoutes = require("./routes/user");
+const emailRoutes = require("./routes/email");
 const app = express();
 app.use(cors());
 app.use(bodyParser.json({ extended: false }));
 
-app.use(userRoutes)
-app.use(emailRoutes)
+app.use(userRoutes);
+app.use(emailRoutes);
 
 mongoose
   .connect(process.env.MONGODB)
   .then(() => {
     console.log("connected");
 
-    const server=app.listen(process.env.PORT || 3000);
-    const io=require('./socket').init(server);
-    io.on("connection",(socket)=>{
-      socket.on("joinroom",(room)=>{
-        socket.join(room)
-        console.log("room joined",room)
-      })
-      socket.on("leaveroom",(room)=>{
-        socket.leave(room)
-      })
-      console.log("Client connected")
-    })
+    const server = app.listen(process.env.PORT || 3000);
+    const io = require("./socket").init(server);
+    io.on("connection", (socket) => {
+      socket.on("joinroom", (room) => {
+        socket.join(room);
+        console.log("room joined", room);
+      });
+      socket.on("leaveroom", (room) => {
+        socket.leave(room);
+      });
+      console.log("Client connected");
+    });
   })
   .catch((err) => {
     console.log(err);
   });
-
-
-
-  

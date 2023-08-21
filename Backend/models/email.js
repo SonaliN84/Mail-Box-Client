@@ -33,10 +33,10 @@ const emailSchema = new Schema({
     required: true,
     default: false,
   },
-  date:{
-    type:String,
-    required:true
-  }
+  date: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Email", emailSchema);

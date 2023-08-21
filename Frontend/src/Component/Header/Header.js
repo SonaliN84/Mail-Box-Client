@@ -3,27 +3,29 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { authActions } from "../../Store/auth-slice";
-import {emailDataActions} from '../../Store/emaildata-slice';
+import { emailDataActions } from "../../Store/emaildata-slice";
 import { socket } from "../../App";
 
 const Header = () => {
   const dispatch = useDispatch();
   const authIsLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const receivedEmailData=useSelector(state=>state.emailData.receivedEmails)
-  const userId=useSelector(state=>state.auth.userId)
+  const receivedEmailData = useSelector(
+    (state) => state.emailData.receivedEmails
+  );
+  const userId = useSelector((state) => state.auth.userId);
   const logoutHandler = () => {
-    socket.emit("leaveroom",userId)
+    socket.emit("leaveroom", userId);
     dispatch(authActions.logout());
-    dispatch(emailDataActions.setReceivedEmails([]))
-    dispatch(emailDataActions.setSentEmails([]))
-    dispatch(emailDataActions.clearInterval())
+    dispatch(emailDataActions.setReceivedEmails([]));
+    dispatch(emailDataActions.setSentEmails([]));
+    dispatch(emailDataActions.clearInterval());
     dispatch(emailDataActions.setInitialActivePage());
-    dispatch(emailDataActions.setTotal(0))
-    dispatch(emailDataActions.setInitialLimit())
+    dispatch(emailDataActions.setTotal(0));
+    dispatch(emailDataActions.setInitialLimit());
   };
 
-  const unreadCount=receivedEmailData.filter((email)=>email.read===false)
-  const unreadEmailCount=unreadCount.length;
+  const unreadCount = receivedEmailData.filter((email) => email.read === false);
+  const unreadEmailCount = unreadCount.length;
   return (
     <Navbar collapseOnSelect expand="lg" className="Header">
       {authIsLoggedIn && (
@@ -74,26 +76,32 @@ const Header = () => {
                 </Button>
               </Dropdown.Item>
               <Dropdown.Item>
-              <Link
+                <Link
                   to="/Users"
                   style={{ textDecoration: "none", color: "black" }}
-                > <button
-                  type="button"
-                  class="position-relative"
-                  style={{ background: "#C85C8E", border: "1px solid #C85C8E",color:"white",borderRadius:"5px",padding:"8px"}}
                 >
-                  Inbox
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info  text-dark">
-                  {unreadEmailCount}
-                    <span class="visually-hidden">unread messages</span>
-                  </span>
-                </button>
-               
-                  
+                  {" "}
+                  <button
+                    type="button"
+                    class="position-relative"
+                    style={{
+                      background: "#C85C8E",
+                      border: "1px solid #C85C8E",
+                      color: "white",
+                      borderRadius: "5px",
+                      padding: "8px",
+                    }}
+                  >
+                    Inbox
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info  text-dark">
+                      {unreadEmailCount}
+                      <span class="visually-hidden">unread messages</span>
+                    </span>
+                  </button>
                 </Link>
               </Dropdown.Item>
               <Dropdown.Item>
-              <Button
+                <Button
                   className="my-2"
                   style={{
                     background: "#C85C8E",
@@ -101,7 +109,14 @@ const Header = () => {
                     textDecoration: "none",
                   }}
                 >
-                <Link to='/SentEmails'  style={{ textDecoration: "none", color: "white" }}>Sent</Link></Button></Dropdown.Item>
+                  <Link
+                    to="/SentEmails"
+                    style={{ textDecoration: "none", color: "white" }}
+                  >
+                    Sent
+                  </Link>
+                </Button>
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Nav>

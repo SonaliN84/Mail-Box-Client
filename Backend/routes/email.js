@@ -15,6 +15,4 @@ router.delete("/email/delete-email/:emailId",authMiddleware.authenticate,emailCo
 
 router.put("/email/read-email/:emailId",authMiddleware.authenticate,emailController.putReadEmail)
 
-
-
 module.exports = router;

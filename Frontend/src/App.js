@@ -1,4 +1,4 @@
-import { Switch, Route,Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import "./App.css";
 import RootLayout from "./Pages/RootLayout";
 import Signup from "./Pages/Signup";
@@ -43,18 +43,6 @@ function App() {
   useEffect(() => {
     if (authIsLoggedIn) {
       socket.emit("joinroom", userId);
-      // axios.get('http://localhost:3000/email/received-emails',{
-      //   headers: { Authorization: authToken },
-      // })
-      // .then((response)=>{
-      //   console.log("RECEIVED",response.data.receivedEmails)
-      //   dispatch(emailDataActions.setReceivedEmails(response.data.receivedEmails))
-      // })
-      // .catch(err=>{
-      //   console.log(err);
-      //   alert("Something went wrong")
-      // }
-      // )
 
       axios
         .get("http://localhost:3000/email/sent-emails", {
@@ -68,36 +56,6 @@ function App() {
           console.log(err);
           alert("Something went wrong");
         });
-      // const email=localStorage.getItem('email');
-      // axios.get(`https://mail-box-client-18272-default-rtdb.firebaseio.com/received${email}.json`)
-      // .then((response)=>{
-      //   let array=[];
-      //   Object.keys(response.data).forEach((key)=>{
-      //       let obj={
-      //           id:key,
-      //           read:response.data[key].read,
-      //           from:response.data[key].from,
-      //           subject:response.data[key].subject,
-      //           emaildata:response.data[key].emaildata
-      //       }
-      //       array.push(obj)
-      //     })
-      //   dispatch(emailDataActions.setReceivedEmails(array))
-      // })
-      // axios.get(`https://mail-box-client-18272-default-rtdb.firebaseio.com/sent${email}.json`)
-      // .then((response)=>{
-      //   let array=[];
-      //   Object.keys(response.data).forEach((key)=>{
-      //       let obj={
-      //           id:key,
-      //           to:response.data[key].to,
-      //           subject:response.data[key].subject,
-      //           emaildata:response.data[key].emaildata
-      //       }
-      //       array.push(obj)
-      //     })
-      //   dispatch(emailDataActions.setSentEmails(array))
-      // })
     }
   }, [authIsLoggedIn]);
 

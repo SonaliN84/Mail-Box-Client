@@ -6,10 +6,9 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { emailDataActions } from "../../../../Store/emaildata-slice";
+
 import moment from "moment";
 const CreateEmail = () => {
-  const dispatch = useDispatch();
   const editor = useRef(null);
   const inputToRef = useRef("");
   const inputSubjectRef = useRef("");
@@ -20,11 +19,7 @@ const CreateEmail = () => {
   const changeDataHandler = () => {
     setContent(editor.current.value);
   };
-  // const editor = Jodit.make("#editor", {
-  //   "uploader": {
-  //     "insertImageAsBase64URI": true
-  //   }
-  // });
+
   const formSubmitHandler = (event) => {
     event.preventDefault();
     const enteredTo = inputToRef.current.value;
@@ -55,45 +50,6 @@ const CreateEmail = () => {
         console.log(err);
         alert(err.response.data.err);
       });
-
-    // let emailDataReceived={
-
-    //  from:authUserEmailOriginal,
-    //  subject:enteredSubject,
-    //  emaildata:enteredEmailData,
-    //  read:false
-    // }
-
-    // let receiverEmail=enteredTo.replace(/[^a-zA-z0-9 ]/g,'');
-    // let newEmailDataSent=JSON.stringify(emailDataSent)
-    // let newEmailDataReceived=JSON.stringify(emailDataReceived)
-
-    // axios.post(`https://mail-box-client-18272-default-rtdb.firebaseio.com/sent${authUserEmail}.json`,newEmailDataSent)
-    // .then((res)=>{
-    //  console.log(res)
-    //  axios.get(`https://mail-box-client-18272-default-rtdb.firebaseio.com/sent${authUserEmail}.json`)
-    //           .then((response)=>{
-    //             let array=[];
-    //             Object.keys(response.data).forEach((key)=>{
-    //                 let obj={
-    //                     id:key,
-    //                     to:response.data[key].to,
-    //                     subject:response.data[key].subject,
-    //                     emaildata:response.data[key].emaildata
-    //                 }
-    //                 array.push(obj)
-    //               })
-    //             dispatch(emailDataActions.setSentEmails(array))
-    //           })
-    // })
-    // axios.post(`https://mail-box-client-18272-default-rtdb.firebaseio.com/received${receiverEmail}.json`,newEmailDataReceived)
-    // .then((res)=>{
-    //   alert("Email sent successfully")
-    //  console.log("received email",res.data)
-    //  inputToRef.current.value='';
-    //  inputSubjectRef.current.value='';
-    //  editor.current.value='';
-    // })
   };
   return (
     <div className="emailInput">

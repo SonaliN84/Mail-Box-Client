@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import "./ReceivedEmails.css";
 import ShowEmail from "./ShowEmail";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { emailDataActions } from "../../../../Store/emaildata-slice";
 import axios from "axios";

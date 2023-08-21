@@ -1,13 +1,11 @@
 import Header from "../Component/Header/Header";
 import { Fragment } from "react";
-const RootLayout =(props)=>{
- return (
+const RootLayout = (props) => {
+  return (
     <Fragment>
-        <Header/>
-        {props.children}
+      <Header />
+      {props.children}
     </Fragment>
-    
- )
-
-}
+  );
+};
 export default RootLayout;

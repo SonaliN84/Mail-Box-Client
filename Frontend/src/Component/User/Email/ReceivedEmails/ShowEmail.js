@@ -9,94 +9,28 @@ const ShowEmail = (props) => {
   const data = props.emaildata;
   const dispatch = useDispatch();
   const newEmail = useSelector((state) => state.auth.userEmail);
-  const authToken=useSelector(State=>State.auth.token)
-  const receivedEmails=useSelector(state=>state.emailData.receivedEmails)
+  const authToken = useSelector((State) => State.auth.token);
+  const receivedEmails = useSelector((state) => state.emailData.receivedEmails);
   console.log("read", props.read);
   const readHandler = () => {
-   if(props.read==false){
-   axios.put(`http://localhost:3000/email/read-email/${props.id}`,{read:true} ,{
-    headers: { Authorization: authToken }
-  })
-  .then((response) => {
-    console.log(response);
-    // let a=receivedEmails.find((e)=>e._id == props.id)
-    // a={...a,read:true}
-    dispatch(emailDataActions.setReadEmails(props.id))
-  })
-  .catch((err) => {
-    console.log(err);
-    
-  });
-}
-   // let emailDataReceived = {
-    //   from: props.from,
-    //   subject: props.subject,
-    //   emaildata: props.emaildata,
-    //   read: true,
-    // };
+    if (props.read == false) {
+      axios
+        .put(
+          `http://localhost:3000/email/read-email/${props.id}`,
+          { read: true },
+          {
+            headers: { Authorization: authToken },
+          }
+        )
+        .then((response) => {
+          console.log(response);
 
-    // const newEmaildata = JSON.stringify(emailDataReceived);
-    // axios
-    //   .put(
-    //     `https://mail-box-client-18272-default-rtdb.firebaseio.com/received${newEmail}/${props.id}.json`,
-    //     newEmaildata
-    //   )
-    //   .then((res) => {
-    //     axios
-    //       .get(
-    //         `https://mail-box-client-18272-default-rtdb.firebaseio.com/received${newEmail}.json`
-    //       )
-    //       .then((response) => {
-    //         let array = [];
-    //         Object.keys(response.data).forEach((key) => {
-    //           let obj = {
-    //             id: key,
-    //             read: response.data[key].read,
-    //             from: response.data[key].from,
-    //             subject: response.data[key].subject,
-    //             emaildata: response.data[key].emaildata,
-    //           };
-    //           array.push(obj);
-    //         });
-    //         dispatch(emailDataActions.setReceivedEmails(array));
-    //       });
-    //   });
-  };
-
-  const deleteEmailHandler = () => {
-    axios.delete(`http://localhost:3000/email/delete-email/${props.id}`,{
-      headers: { Authorization: authToken }
-    }).then(()=>{
-      let newReceivedEmails=receivedEmails.filter((e)=>e._id != props.id)
-      dispatch(emailDataActions.setReceivedEmails(newReceivedEmails))
-    })
-    .catch(err=>{
-      console.log(err)
-    })
-    // axios
-    //   .delete(
-    //     `https://mail-box-client-18272-default-rtdb.firebaseio.com/received${newEmail}/${props.id}.json`
-    //   )
-    //   .then((res) => {
-    //     axios
-    //       .get(
-    //         `https://mail-box-client-18272-default-rtdb.firebaseio.com/received${newEmail}.json`
-    //       )
-    //       .then((response) => {
-    //         let array = [];
-    //         Object.keys(response.data).forEach((key) => {
-    //           let obj = {
-    //             id: key,
-    //             read: response.data[key].read,
-    //             from: response.data[key].from,
-    //             subject: response.data[key].subject,
-    //             emaildata: response.data[key].emaildata,
-    //           };
-    //           array.push(obj);
-    //         });
-    //         dispatch(emailDataActions.setReceivedEmails(array));
-    //       });
-    //   });
+          dispatch(emailDataActions.setReadEmails(props.id));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
   return (
     <div className="d-flex" style={{ maxWidth: "100%" }}>
@@ -142,12 +76,6 @@ const ShowEmail = (props) => {
           >
             Subject:{props.subject}
           </div>
-
-          {/* <div
-            class="row"
-            dangerouslySetInnerHTML={{ __html: data }}
-            style={{ overflow: "hidden" }}
-          /> */}
         </div>
       </Link>
       <div>

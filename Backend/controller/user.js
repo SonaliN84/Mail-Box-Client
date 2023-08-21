@@ -58,15 +58,13 @@ exports.postLoginUser = async (req, res, next) => {
         throw new Error("Something went wrong");
       }
       if (result === true) {
-        res
-          .status(200)
-          .json({
-            message: "User Logged in successfully",
-            success: true,
-            token: generateAccessToken(user._id),
-            email: user.email,
-            userId:user._id
-          });
+        res.status(200).json({
+          message: "User Logged in successfully",
+          success: true,
+          token: generateAccessToken(user._id),
+          email: user.email,
+          userId: user._id,
+        });
       } else {
         res.status(401).json({ err: "Incorrect Password", success: false });
       }
