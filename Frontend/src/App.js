@@ -25,7 +25,7 @@ function App() {
   const dispatch = useDispatch();
   console.log(userId);
   socket.on("read-email", (data) => {
-    console.log(">>>>>>>>>emailId", data.emailId);
+    console.log("emailId", data.emailId);
     dispatch(emailDataActions.setSentReadEmail(data.emailId));
   });
   socket.on("new-received-email", (data) => {

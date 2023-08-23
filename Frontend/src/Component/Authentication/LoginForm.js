@@ -34,7 +34,9 @@ const LoginForm = () => {
             userId: response.data.userId,
           })
         );
-
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("email", response.data.email);
+        localStorage.setItem("userid", response.data.userId);
         socket.emit("joinroom", response.data.userId);
         history.replace("/Users");
       })

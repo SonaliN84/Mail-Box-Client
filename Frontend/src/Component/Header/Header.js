@@ -22,6 +22,9 @@ const Header = () => {
     dispatch(emailDataActions.setInitialActivePage());
     dispatch(emailDataActions.setTotal(0));
     dispatch(emailDataActions.setInitialLimit());
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+    localStorage.removeItem("userid");
   };
 
   const unreadCount = receivedEmailData.filter((email) => email.read === false);

@@ -20,18 +20,12 @@ const authSlice = createSlice({
       state.userEmail = action.payload.email;
       state.userId = action.payload.userId;
       state.isLoggedIn = true;
-      localStorage.setItem("token", action.payload.token);
-      localStorage.setItem("email", action.payload.email);
-      localStorage.setItem("userid", action.payload.userId);
     },
     logout(state) {
       state.token = null;
       state.userEmail = null;
       state.isLoggedIn = false;
       state.userId = null;
-      localStorage.removeItem("token");
-      localStorage.removeItem("email");
-      localStorage.removeItem("userid");
     },
   },
 });
